@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <title>Apply for {{ internship['Profile'] }} at {{ internship['Company'] }}</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif; /* Modern font */
+            background-color: #f4f6f9; /* Light gray background */
+            margin: 0; /* Remove default margin */
+            padding: 40px 20px; /* Padding around the body */
+            box-sizing: border-box; /* Include padding in width calculation */
+        }
+
+        .container {
+            max-width: 600px; /* Limit max width */
+            margin: 0 auto; /* Center the container */
+            padding: 30px; /* Inner padding for the container */
+            background: #ffffff; /* White background for the form */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            text-align: left; /* Align text to the left */
+        }
+
+        h1 {
+            font-size: 28px; /* Increased font size for job title */
+            color: #333; /* Darker text color */
+            margin-bottom: 5px; /* Space below the title */
+            text-align: center; /* Center the title */
+            font-weight: 500; /* Medium font weight */
+        }
+
+        .subtitle {
+            font-size: 18px; /* Smaller font size for profile and company */
+            color: #666; /* Gray color for subtitle */
+            text-align: center; /* Center the subtitle */
+            margin-bottom: 25px; /* Space below the subtitle */
+        }
+
+        label {
+            margin-bottom: 8px; /* Space below the label */
+            font-weight: 600; /* Bold labels */
+            color: #555; /* Gray text color */
+            display: block; /* Block display for labels */
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="number"],
+        select {
+            width: 100%; /* Full width for inputs */
+            padding: 12px; /* Padding for inputs */
+            margin-bottom: 15px; /* Space below inputs */
+            border: 1px solid #ced4da; /* Light gray border */
+            border-radius: 5px; /* Rounded corners */
+            font-size: 16px; /* Font size */
+            transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition */
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        input[type="number"]:focus,
+        select:focus {
+            border-color: #007bff; /* Blue border on focus */
+            outline: none; /* Remove outline */
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Blue shadow effect */
+        }
+
+        button {
+            width: 100%; /* Full width for button */
+            padding: 12px; /* Padding for button */
+            background-color: #007bff; /* Blue background */
+            color: white; /* White text */
+            border: none; /* No border */
+            border-radius: 5px; /* Rounded corners */
+            font-size: 18px; /* Font size */
+            font-weight: bold; /* Bold text */
+            cursor: pointer; /* Pointer cursor */
+            transition: background-color 0.3s ease, transform 0.2s; /* Smooth transition */
+        }
+
+        button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            transform: translateY(-2px); /* Slight lift on hover */
+        }
+
+        a {
+            display: block; /* Block link */
+            margin-top: 25px; /* Space above link */
+            color: #007bff; /* Blue link color */
+            text-decoration: none; /* Remove underline */
+            text-align: center; /* Center the link */
+            font-weight: 500; /* Medium font weight */
+        }
+
+        a:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            body {
+                padding: 20px; /* Reduced padding on small screens */
+            }
+
+            .container {
+                padding: 20px; /* Reduced padding for the container */
+            }
+
+            h1 {
+                font-size: 24px; /* Slightly smaller title */
+            }
+
+            button {
+                font-size: 16px; /* Slightly smaller button font */
+            }
+        }
+
+        /* Popup styles */
+        .popup {
+            display: none; /* Hidden by default */
+            position: fixed; /* Fixed position */
+            left: 0; 
+            top: 0; 
+            width: 100%; 
+            height: 100%; 
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+            justify-content: center; 
+            align-items: center; 
+            z-index: 1000; /* Above other elements */
+        }
+
+        .popup-content {
+            background: white; /* White background for popup */
+            padding: 20px; 
+            border-radius: 10px; 
+            text-align: center; 
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Shadow */
+        }
+
+        .popup-content button {
+            margin-top: 15px; /* Space above button */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ internship['Profile'] }}</h1>
+        <p class="subtitle">{{ internship['Company'] }}</p>
+        <form id="applicationForm">
+            <label for="first_name">First Name:</label>
+            <input type="text" id="first_name" name="first_name" required>
+
+            <label for="last_name">Last Name:</label>
+            <input type="text" id="last_name" name="last_name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="contact_number">Contact Number:</label>
+            <input type="tel" id="contact_number" name="contact_number" required>
+
+            <label for="current_city">Current City:</label>
+            <input type="text" id="current_city" name="current_city" required>
+
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="" disabled selected>Select your gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select>
+
+            <label for="course">Course:</label>
+            <select id="course" name="course" required>
+                <option value="" disabled selected>Select your course</option>
+                <option value="BE">Bachelor of Engineering (BE)</option>
+                <option value="B.Tech">Bachelor of Technology (B.Tech)</option>
+                <option value="B.Sc">Bachelor of Science (B.Sc)</option>
+                <option value="M.Sc">Master of Science (M.Sc)</option>
+                <option value="M.Tech">Master of Technology (M.Tech)</option>
+                <option value="BCA">Bachelor of Computer Applications (BCA)</option>
+                <option value="MCA">Master of Computer Applications (MCA)</option>
+                <option value="Ph.D.">Doctor of Philosophy (Ph.D.)</option>
+            </select>
+
+            <label for="stream">Stream:</label>
+            <select id="stream" name="stream" required>
+                <option value="" disabled selected>Select your stream</option>
+            </select>
+
+            <label for="college_name">College Name:</label>
+            <input type="text" id="college_name" name="college_name" required>
+
+            <label for="start_year">Start Year:</label>
+            <input type="number" id="start_year" name="start_year" min="1900" max="2099" step="1" required>
+
+            <label for="cgpa">CGPA (out of 10):</label>
+            <input type="number" id="cgpa" name="cgpa" step="0.01" min="0" max="10" required>
+
+            <button type="submit">Submit Application</button>
+        </form>
+
+        <a href="{{ url_for('index') }}">Back to Recommendations</a>
+    </div>
+
+    <div class="popup" id="thankYouPopup">
+        <div class="popup-content">
+            <h2>Thank You!</h2>
+            <p>Your form has been submitted successfully.</p>
+            <button class="back-button" onclick="window.location.href='/'">
+                <i class="fas fa-arrow-left"></i> Back to Recommendations
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Stream options for each course
+        const streamOptions = {
+            "BE": ["Computer Science", "Information Science", "Electronics", "Mechanical", "Civil", "Electrical"],
+            "B.Tech": ["Computer Science", "Information Technology", "Electronics and Communication", "Mechanical Engineering", "Civil Engineering"],
+            "B.Sc": ["Computer Science", "Mathematics", "Physics", "Chemistry", "Biology"],
+            "M.Sc": ["Computer Science", "Mathematics", "Physics", "Chemistry"],
+            "M.Tech": ["Computer Science", "Software Engineering", "Data Science", "Machine Learning"],
+            "BCA": ["Computer Applications"],
+            "MCA": ["Computer Applications"],
+            "Ph.D.": ["Various Specializations"]
+        };
+
+        // Populate stream options based on selected course
+        document.getElementById('course').addEventListener('change', function() {
+            const streamSelect = document.getElementById('stream');
+            streamSelect.innerHTML = '<option value="" disabled selected>Select your stream</option>'; // Reset options
+
+            const selectedCourse = this.value;
+            if (selectedCourse in streamOptions) {
+                streamOptions[selectedCourse].forEach(function(stream) {
+                    const option = document.createElement('option');
+                    option.value = stream;
+                    option.textContent = stream;
+                    streamSelect.appendChild(option);
+                });
+            }
+        });
+
+        // Handle form submission
+        document.getElementById('applicationForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Here you can add the AJAX request to submit form data if needed
+            // For now, we will just show the popup
+            document.getElementById('thankYouPopup').style.display = 'flex'; // Show popup
+        });
+    </script>
+</body>
+</html>

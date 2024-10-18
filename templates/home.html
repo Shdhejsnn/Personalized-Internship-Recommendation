@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InternSmart</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"> <!-- Google Fonts -->
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Roboto', sans-serif; /* Updated font */
+            margin: 0;
+            padding: 0;
+            color: #fff;
+            background-image: url('/static/bg.jpg'); /* Replace with your background image */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            scroll-behavior: smooth; /* Smooth scrolling for navigation */
+        }
+
+        /* Header Styles */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.8); /* Darker transparent background */
+            border-bottom: 2px solid #444; /* Separator line below header */
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            margin: 0;
+            color: #f39c12;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+            margin-left: -300px;
+        }
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: 500; /* Updated font weight */
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #f39c12;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 100px 20px; /* Increased padding for a larger section */
+            background-color: rgba(0, 0, 0, 0.7);
+            margin-top: 80px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            min-height: 80vh; /* Set minimum height for the hero section */
+        }
+
+        .hero h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #f39c12;
+            font-weight: 700; /* Bold heading */
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 20px;
+            max-width: 800px; /* Increased max width for better text layout */
+            margin-left: auto;
+            margin-right: auto;
+            color: #ddd;
+            line-height: 1.6; /* Improved line height for readability */
+        }
+
+        .hero .sub-text {
+            font-size: 16px;
+            margin-bottom: 30px;
+            color: #bbb;
+        }
+
+        .try-now-btn {
+    display: inline-block;
+    padding: 15px 40px; /* Adjusted padding for larger, more prominent button */
+    background: linear-gradient(45deg, #f39c12, #e67e22); /* Gradient background */
+    color: #fff;
+    font-size: 20px;
+    text-decoration: none;
+    border-radius: 50px; /* More rounded for a modern feel */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* 3D shadow effect */
+    transition: all 0.4s ease; /* Smooth transition */
+    font-weight: 700; /* Bolder font */
+    letter-spacing: 1px; /* Slightly increased letter spacing */
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hover effect with glowing and scaling */
+.try-now-btn:hover {
+    background: linear-gradient(45deg, #e67e22, #f39c12); /* Reverse gradient on hover */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 15px #f39c12; /* Glowing effect */
+    transform: scale(1.1); /* Slight scaling on hover */
+}
+
+/* Animation effect when hovering */
+.try-now-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: all 0.75s ease;
+    transform: translate(-50%, -50%) rotate(45deg) scale(0);
+    z-index: 0;
+}
+
+.try-now-btn:hover::before {
+    transform: translate(-50%, -50%) rotate(45deg) scale(1);
+}
+
+.try-now-btn:hover::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.4), transparent);
+    transition: all 0.4s ease;
+    transform: translate(-50%, -50%) scale(0);
+    z-index: 0;
+}
+
+.try-now-btn:hover::after {
+    transform: translate(-50%, -50%) scale(1.2);
+}
+
+        /* About Section */
+        #about {
+            padding: 100px 20px; /* Increased padding for larger section */
+            background-color: rgba(0, 0, 0, 0.6);
+            text-align: center;
+            color: #fff;
+            min-height: 80vh; /* Set minimum height for the about section */
+        }
+
+        #about h3 {
+            font-size: 28px;
+            color: #f39c12;
+            font-weight: 700; /* Bold heading */
+            margin-bottom: 20px; /* Space below the heading */
+        }
+
+        #about p {
+            font-size: 18px;
+            max-width: 800px; /* Increased max width for better text layout */
+            margin-left: auto;
+            margin-right: auto;
+            color: #ddd;
+            line-height: 1.6; /* Improved line height for readability */
+            margin-bottom: 20px; /* Space below paragraphs */
+        }
+
+        /* Contact Section */
+        #contact {
+            padding: 50px 20px; /* Reduced padding for less space */
+            background-color: rgba(0, 0, 0, 0.6);
+            text-align: center;
+            color: #fff;
+            min-height: 80vh; /* Set minimum height for the contact section */
+        }
+
+        #contact h3 {
+            font-size: 28px;
+            color: #f39c12;
+            font-weight: 700; /* Bold heading */
+        }
+
+        #contact .contact-info {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap; /* Make it responsive */
+        }
+
+        .contact-info div {
+            text-align: left;
+            max-width: 250px; /* Limit the width for better layout */
+        }
+
+        .contact-info h4 {
+            font-size: 18px;
+            color: #f39c12;
+            margin-bottom: 5px;
+            font-weight: 500; /* Updated font weight */
+        }
+
+        .contact-info p {
+            margin: 0;
+            color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="/static/logo.jpg" alt="InternSmart Logo">
+            <h1>InternSmart</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+                <li><a href="#">Login/Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <h2>Where Your Talent Meets the Right Opportunity!</h2>
+            <p>
+                Unlock your future with InternSmart, the platform designed to connect you with internships tailored to your unique skills and ambitions. Our smart recommendation engine analyzes your profile to provide personalized matches, ensuring you find opportunities that resonate with your career goals.
+            </p>
+            <p>
+                Say goodbye to the generic internship search and hello to targeted matches that truly align with your passion. Discover how we can help you turn your aspirations into reality—your dream internship is just a click away!
+            </p>
+            <a href="{{ url_for('try_now') }}" class="try-now-btn">
+                Try Now
+            </a>
+        </section>
+
+        <!-- About Section -->
+        <section id="about">
+            <h3>About InternSmart</h3>
+            <p>
+                At InternSmart, we understand that finding the right internship can be a daunting task for students navigating their career paths. Our mission is to simplify this process by providing personalized internship recommendations tailored to each student's unique profile.
+            </p>
+            <p>
+                We leverage advanced algorithms and machine learning techniques to analyze essential factors such as your skills, location, salary expectations, and industry interests. By doing so, we ensure that our recommendations align not only with your academic background but also with your career aspirations.
+            </p>
+            <p>
+                At InternSmart, we believe that every student deserves the opportunity to discover internships that can pave the way for a successful career. Join us in transforming the internship search experience, and let us help you find the perfect match that aligns with your professional journey.
+            </p>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact">
+            <h3>Contact Us</h3>
+            <div class="contact-info">
+                <div>
+                    <h4>Skanda H M</h4>
+                    <p>Email: hmskanda06@gmail.com</p>
+                </div>
+                <div>
+                    <h4>Twisha V Sagar</h4>
+                    <p>Email: twishagar8@gmail.com</p>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
